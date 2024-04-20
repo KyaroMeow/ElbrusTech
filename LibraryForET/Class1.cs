@@ -1,9 +1,12 @@
 ﻿using Microsoft.Data.Sqlite;
+using System;
+using System.IO;
 
 namespace LibraryForET
 {
     public class Methods
     {
+
         public void Command(string com)
         {
             using (var connection = new SqliteConnection("Data Source=employees.db"))
@@ -17,16 +20,16 @@ namespace LibraryForET
         public void GenereticEmployees(int quantityEmployees)
         {
 
-            string[] wName = File.ReadAllLines("/resx/GenereticEmployees/wName.txt");
-            string[] mName = File.ReadAllLines("/resx/GenereticEmployees/mName.txt");
-            string[] surName = File.ReadAllLines("/resx/GenereticEmployees/Surname.txt");
-            string[] mLastName = File.ReadAllLines("/resx/GenereticEmployees/mLastName.txt");
-            string[] wLastName = File.ReadAllLines("/resx/GenereticEmployees/wLastName.txt");
-            string[] dateOfBirth = File.ReadAllLines("/resx/GenereticEmployees/dateOfBirth.txt");
-            string[] dateOfEmployment = File.ReadAllLines("/resx/GenereticEmployees/dateOfEmployment.txt");
-            string[] department1 = File.ReadAllLines("/resx/GenereticEmployees/department.txt");
-            string[] dateOfFired = File.ReadAllLines("/resx/GenereticEmployees/dateOfFired.txt");
-            string[] post1 = File.ReadAllLines("/resx/GenereticEmployees/post.txt");
+            string[] wName = File.ReadAllLines("resx/GenereticEmployees/wName.txt");
+            string[] mName = File.ReadAllLines("resx/GenereticEmployees/mName.txt");
+            string[] surName = File.ReadAllLines("resx/GenereticEmployees/Surname.txt");
+            string[] mLastName = File.ReadAllLines("resx/GenereticEmployees/mLastName.txt");
+            string[] wLastName = File.ReadAllLines("resx/GenereticEmployees/wLastName.txt");
+            string[] dateOfBirth = File.ReadAllLines("resx/GenereticEmployees/dateOfBirth.txt");
+            string[] dateOfEmployment = File.ReadAllLines("resx/GenereticEmployees/dateOfEmployment.txt");
+            string[] department1 = File.ReadAllLines("resx/GenereticEmployees/department.txt");
+            string[] dateOfFired = File.ReadAllLines("resx/GenereticEmployees/dateOfFired.txt");
+            string[] post1 = File.ReadAllLines("resx/GenereticEmployees/post.txt");
 
 
             Random rand = new Random();

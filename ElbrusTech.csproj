@@ -35,7 +35,7 @@
   <ItemGroup>
     <Reference Include="LibraryForET, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>LibraryForET\LibraryForET\bin\Debug\net8.0\LibraryForET.dll</HintPath>
+      <HintPath>LibraryForET\bin\Debug\LibraryForET.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Sqlite, Version=8.0.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.Data.Sqlite.Core.8.0.4\lib\netstandard2.0\Microsoft.Data.Sqlite.dll</HintPath>
