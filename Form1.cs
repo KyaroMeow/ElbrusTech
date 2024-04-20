@@ -1,5 +1,8 @@
 ﻿using System.Windows.Forms;
 using LibraryForET;
+using Microsoft.Extensions.Configuration;
+using System.Data.SQLite;
+
 namespace ElbrusTech
 {
     public partial class Form1 : Form
@@ -28,6 +31,15 @@ namespace ElbrusTech
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
 
+		}
+
+		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SQLiteConnection"].ConnectionString;
+			using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+			{
+				connection.Open();
+			}
 		}
 	}
 }

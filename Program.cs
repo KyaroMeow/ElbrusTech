@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Data.SQLite;
-using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace ElbrusTech
 {
@@ -10,14 +10,7 @@ namespace ElbrusTech
 
 		static void Main()
 		{
-			//string connectionString = ConfigurationManager.ConnectionStrings["SQLiteConnection"].ConnectionString;
-			//using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-			//{
-			//	connection.Open();
-			//	// Ваш код для работы с базой данных
-			//	connection.Close();
-			//}
-
+			
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new Form1());
