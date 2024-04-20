@@ -15,7 +15,7 @@ namespace ElbrusTech
             try
             {
                 Methods methods = new Methods();
-                methods.GenereticEmployees(3);
+                methods.GenereticEmployees(10);
 				MessageBox.Show("все хорошо");
 			}
             catch

@@ -67,7 +67,7 @@ namespace LibraryForET
                 else
                 {
                     string name = wName[rname];
-                    string surname = surName[rsurname];
+                    string surname = surName[rsurname] + "а";
                     string lastname = wLastName[rwLastName];
                     fio = $"{surname} {name} {lastname}";
                 }
