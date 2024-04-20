@@ -12,10 +12,22 @@ namespace ElbrusTech
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-            Methods methods = new Methods();
-            methods.GenereticEmployees(3);
-            MessageBox.Show("все хорошо");
+            try
+            {
+                Methods methods = new Methods();
+                methods.GenereticEmployees(3);
+				MessageBox.Show("все хорошо");
+			}
+            catch
+            {
+				MessageBox.Show("ВСЕ ПЛОХО");
+			}
 
         }
-    }
+
+		private void Form1_Load(object sender, System.EventArgs e)
+		{
+
+		}
+	}
 }

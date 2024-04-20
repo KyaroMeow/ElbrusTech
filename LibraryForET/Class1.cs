@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
+using System.Data.SQLite;
 using System;
 using System.IO;
 
@@ -6,16 +7,16 @@ namespace LibraryForET
 {
     public class Methods
     {
-
         public void Command(string com)
         {
             using (var connection = new SqliteConnection("Data Source=employees.db"))
-            {
+			{
                 connection.Open();
-                SqliteCommand command = new SqliteCommand();
+				SqliteCommand command = new SqliteCommand();
                 command.Connection = connection;
                 command.CommandText = com;
-            }
+				command.ExecuteNonQuery();
+			}
         }
         public void GenereticEmployees(int quantityEmployees)
         {
@@ -70,9 +71,10 @@ namespace LibraryForET
                     string lastname = wLastName[rwLastName];
                     fio = $"{surname} {name} {lastname}";
                 }
-                string commandText = $"INSERT INTO emploees (ФИО, Дата рождения, Дата принятия на работу, Отдел, Дата увольнения с работы, Должность, Оклад) VALUES ({fio}, {dateofbirth}, {dateofemployment}, {department}, {dateofFired}, {post}, {salary})";
+                string commandText = $"INSERT INTO emploees ('ФИО', 'Дата рождения', 'Дата принятия на работу', 'Отдел', 'Дата увольнения с работы', 'Должность', 'Оклад') VALUES ('{fio}', '{dateofbirth}', '{dateofemployment}', '{department}', '{dateofFired}', '{post}', '{salary}')";
                 Command(commandText);
-            }
+				
+			}
         }
     }
 }
