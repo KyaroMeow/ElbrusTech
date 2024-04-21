@@ -7,6 +7,7 @@ using System.IO;
 using System.Data;
 using Microsoft.Data.Sqlite;
 using LibraryForET;
+using System.Data.Common;
 
 
 
@@ -40,8 +41,9 @@ namespace ElbrusTech
         public Form1()
         {
             InitializeComponent();
+            
         }
-
+         SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter("SELECT * FROM emploees", "Data Source=employees.db");
         private void button1_Click(object sender, System.EventArgs e)
         {
 
@@ -63,13 +65,13 @@ namespace ElbrusTech
 
             dataTable = new DataTable();
             dataTable.Columns.Add("ID", typeof(int));
-            dataTable.Columns.Add("FIO", typeof(string));
-            dataTable.Columns.Add("DateOfBirth", typeof(string));
-            dataTable.Columns.Add("DateOfEmployment", typeof(string));
-            dataTable.Columns.Add("Department", typeof(string));
-            dataTable.Columns.Add("DateOfFired", typeof(string));
-            dataTable.Columns.Add("Post", typeof(string));
-            dataTable.Columns.Add("Salary", typeof(string));
+            dataTable.Columns.Add("ФИО", typeof(string));
+            dataTable.Columns.Add("Дата рождения", typeof(string));
+            dataTable.Columns.Add("Дата принятия на работу", typeof(string));
+            dataTable.Columns.Add("Отдел", typeof(string));
+            dataTable.Columns.Add("Дата увольнения с работы", typeof(string));
+            dataTable.Columns.Add("Должность", typeof(string));
+            dataTable.Columns.Add("Оклад", typeof(string));
             UpdateData();
 
 
@@ -81,8 +83,7 @@ namespace ElbrusTech
 
         private void button2_Click(object sender, EventArgs e)
         {
-           SQLiteDataAdapter dataAdapter;
-            methods.Update(dataTable);
+            methods.Update(dataAdapter, dataTable);
         }
     }
 }

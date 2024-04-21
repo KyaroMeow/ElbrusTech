@@ -23,12 +23,11 @@ namespace LibraryForET
 	}
 	public class Methods
     {
-        private SQLiteDataAdapter dataAdapter;
-        public void Update(DataTable dataTable)
+
+        public void Update(SQLiteDataAdapter dataAdapter, DataTable dataTable)
         {
             using (var connection = new SqliteConnection("Data Source=employees.db"))
             {
-       
                 connection.Open();
                 dataAdapter.UpdateCommand = new SQLiteCommandBuilder(dataAdapter).GetUpdateCommand();
                 dataAdapter.Update(dataTable);
