@@ -85,5 +85,10 @@ namespace ElbrusTech
         {
             methods.Update(dataAdapter, dataTable);
         }
-    }
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
