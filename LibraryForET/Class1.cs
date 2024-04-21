@@ -23,7 +23,7 @@ namespace LibraryForET
         public List<People> ListPeople()
         {
             List<People> people = new List<People>();
-            string sqlExpression = "SELECT * FROM employees";
+            string sqlExpression = "SELECT * FROM emploees";
             using (SqliteConnection connection = new SqliteConnection(Command()))
             {
                 connection.Open();

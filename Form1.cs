@@ -14,6 +14,8 @@ namespace ElbrusTech
 {
     public partial class Form1 : Form
     {
+
+		
 		DataTable dataTable = new DataTable();
 		private Methods methods;
 		public Form1()
@@ -50,27 +52,28 @@ namespace ElbrusTech
 			dataTable.Columns.Add("Salary", typeof(string));
 
 			dataGridView1.DataSource = dataTable;
-			//foreach (var person in peopleList)
-			//{
-			//	dataTable.Rows.Add(
-			//		person.ID,
-			//		person.FIO,
-			//		person.DateOfBirth,
-			//		person.DateOfEmployment,
-			//		person.Department,
-			//		person.DateOfFired,
-			//		person.Post,
-			//		person.Salary
-			//	);
-			//}
+            List<People> peopleList = methods.ListPeople();
+            foreach (var person in peopleList)
+            {
+                dataTable.Rows.Add(
+                    person.ID,
+                    person.FIO,
+                    person.DateOfBirth,
+                    person.DateOfEmployment,
+                    person.Department,
+                    person.DateOfFired,
+                    person.Post,
+                    person.Salary
+                );
+            }
 
-	
-		}
+
+        }
 		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			List<People> peopleList = methods.ListPeople();
-			methodsBindingSource.DataSource = peopleList;
-			dataGridView1.DataSource = methodsBindingSource;
+			//List<People> peopleList = methods.ListPeople();
+			//methodsBindingSource.DataSource = peopleList;
+			//dataGridView1.DataSource = methodsBindingSource;
 
 
 
@@ -79,5 +82,5 @@ namespace ElbrusTech
 			//employees = ListPeople(sqlExpression);
 			//dataGridView1.DataSource = employees;
 		}
-	}
+    }
 }
