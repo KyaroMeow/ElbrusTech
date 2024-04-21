@@ -14,12 +14,13 @@ namespace ElbrusTech
 {
     public partial class Form1 : Form
     {
-            DataTable dataTable = new DataTable();
+        Methods methods = new Methods();
+        DataTable dataTable = new DataTable();
         public void UpdateData()
         {
             dataGridView1.DataSource = null;
             dataTable.Rows.Clear();
-            
+
             List<People> peopleList = methods.ListPeople();
             foreach (var person in peopleList)
             {
@@ -36,11 +37,9 @@ namespace ElbrusTech
             }
             dataGridView1.DataSource = dataTable;
         }
-        private Methods methods;
         public Form1()
         {
             InitializeComponent();
-            methods = new LibraryForET.Methods();
         }
 
         private void button1_Click(object sender, System.EventArgs e)
@@ -78,6 +77,12 @@ namespace ElbrusTech
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+           SQLiteDataAdapter dataAdapter;
+            methods.Update(dataTable);
         }
     }
 }

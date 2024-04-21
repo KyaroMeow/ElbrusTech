@@ -2,6 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Common;
+using System.Data.SQLite;
+using System.Data;
 using System.IO;
 
 namespace LibraryForET
@@ -20,6 +23,18 @@ namespace LibraryForET
 	}
 	public class Methods
     {
+        private SQLiteDataAdapter dataAdapter;
+        public void Update(DataTable dataTable)
+        {
+            using (var connection = new SqliteConnection("Data Source=employees.db"))
+            {
+       
+                connection.Open();
+                dataAdapter.UpdateCommand = new SQLiteCommandBuilder(dataAdapter).GetUpdateCommand();
+                dataAdapter.Update(dataTable);
+                connection.Close();
+            }
+        }
         public List<People> ListPeople()
         {
             List<People> people = new List<People>();
