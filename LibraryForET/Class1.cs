@@ -24,7 +24,7 @@ namespace LibraryForET
         {
             List<People> people = new List<People>();
             string sqlExpression = "SELECT * FROM emploees";
-            using (SqliteConnection connection = new SqliteConnection(Command()))
+            using (var connection = new SqliteConnection("Data Source=employees.db"))
             {
                 connection.Open();
 
@@ -60,17 +60,16 @@ namespace LibraryForET
             }
             return people;
         }
-        public string Command(string com = "SQLiteConnection")
+        public void Command(string com)
         {
-            return ConfigurationManager.ConnectionStrings[com].ConnectionString;
-            //using (var connection = new SqliteConnection("Data Source=employees.db"))
-            //{
-            //    connection.Open();
-            //    SqliteCommand command = new SqliteCommand();
-            //    command.Connection = connection;
-            //    command.CommandText = com;
-            //    command.ExecuteNonQuery();
-            //}
+            using (var connection = new SqliteConnection("Data Source=employees.db"))
+            {
+                connection.Open();
+                SqliteCommand command = new SqliteCommand();
+                command.Connection = connection;
+                command.CommandText = com;
+                command.ExecuteNonQuery();
+            }
         }
         public void GenereticEmployees(int quantityEmployees)
         {
