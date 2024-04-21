@@ -1,31 +1,30 @@
 ﻿using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 
 namespace LibraryForET
 {
+	public class People
+	{
+		public int ID { get; set; }
+		public string FIO { get; set; }
+		public string DateOfBirth { get; set; }
+		public string DateOfEmployment { get; set; }
+		public string Department { get; set; }
+		public string DateOfFired { get; set; }
+		public string Post { get; set; }
+		public string Salary { get; set; }
 
-    public class Methods
+	}
+	public class Methods
     {
-        public class People
-        {
-            public int ID { get; set; }
-            public string FIO { get; set; }
-            public string DateOfBirth { get; set; }
-            public string DateOfEmployment { get; set; }
-            public string Department { get; set; }
-            public string DateOfFired { get; set; }
-            public string Post { get; set; }
-            public string Salary { get; set; }
-
-        }
-
         public List<People> ListPeople()
         {
             List<People> people = new List<People>();
             string sqlExpression = "SELECT * FROM employees";
-            using (var connection = new SqliteConnection("Data Source=employees.db"))
+            using (SqliteConnection connection = new SqliteConnection(Command()))
             {
                 connection.Open();
 
@@ -61,16 +60,17 @@ namespace LibraryForET
             }
             return people;
         }
-        public void Command(string com)
+        public string Command(string com = "SQLiteConnection")
         {
-            using (var connection = new SqliteConnection("Data Source=employees.db"))
-            {
-                connection.Open();
-                SqliteCommand command = new SqliteCommand();
-                command.Connection = connection;
-                command.CommandText = com;
-                command.ExecuteNonQuery();
-            }
+            return ConfigurationManager.ConnectionStrings[com].ConnectionString;
+            //using (var connection = new SqliteConnection("Data Source=employees.db"))
+            //{
+            //    connection.Open();
+            //    SqliteCommand command = new SqliteCommand();
+            //    command.Connection = connection;
+            //    command.CommandText = com;
+            //    command.ExecuteNonQuery();
+            //}
         }
         public void GenereticEmployees(int quantityEmployees)
         {
