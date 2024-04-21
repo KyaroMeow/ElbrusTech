@@ -14,44 +14,12 @@ namespace ElbrusTech
 {
     public partial class Form1 : Form
     {
-
-		
-		DataTable dataTable = new DataTable();
-		private Methods methods;
-		public Form1()
+            DataTable dataTable = new DataTable();
+        public void UpdateData()
         {
-            InitializeComponent();
-			methods = new LibraryForET.Methods();
-		}
-
-        private void button1_Click(object sender, System.EventArgs e)
-        {
-            try
-            {
-                methods.GenereticEmployees(10);
-				MessageBox.Show("все хорошо");
-			}
-            catch
-            {
-				MessageBox.Show("ВСЕ ПЛОХО");
-			}
-
-        }
-
-		private void Form1_Load(object sender, System.EventArgs e)
-		{
-
-			dataTable = new DataTable();
-			dataTable.Columns.Add("ID", typeof(int));
-			dataTable.Columns.Add("FIO", typeof(string));
-			dataTable.Columns.Add("DateOfBirth", typeof(string));
-			dataTable.Columns.Add("DateOfEmployment", typeof(string));
-			dataTable.Columns.Add("Department", typeof(string));
-			dataTable.Columns.Add("DateOfFired", typeof(string));
-			dataTable.Columns.Add("Post", typeof(string));
-			dataTable.Columns.Add("Salary", typeof(string));
-
-			dataGridView1.DataSource = dataTable;
+            dataGridView1.DataSource = null;
+            dataTable.Rows.Clear();
+            
             List<People> peopleList = methods.ListPeople();
             foreach (var person in peopleList)
             {
@@ -66,21 +34,50 @@ namespace ElbrusTech
                     person.Salary
                 );
             }
+            dataGridView1.DataSource = dataTable;
+        }
+        private Methods methods;
+        public Form1()
+        {
+            InitializeComponent();
+            methods = new LibraryForET.Methods();
+        }
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+
+            try
+            {
+                methods.GenereticEmployees(10);
+                UpdateData();
+                MessageBox.Show("Сотрудники сгенерированы");
+            }
+            catch
+            {
+                MessageBox.Show("ВСЕ ПЛОХО");
+            }
+
+        }
+
+        private void Form1_Load(object sender, System.EventArgs e)
+        {
+
+            dataTable = new DataTable();
+            dataTable.Columns.Add("ID", typeof(int));
+            dataTable.Columns.Add("FIO", typeof(string));
+            dataTable.Columns.Add("DateOfBirth", typeof(string));
+            dataTable.Columns.Add("DateOfEmployment", typeof(string));
+            dataTable.Columns.Add("Department", typeof(string));
+            dataTable.Columns.Add("DateOfFired", typeof(string));
+            dataTable.Columns.Add("Post", typeof(string));
+            dataTable.Columns.Add("Salary", typeof(string));
+            UpdateData();
 
 
         }
-		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			//List<People> peopleList = methods.ListPeople();
-			//methodsBindingSource.DataSource = peopleList;
-			//dataGridView1.DataSource = methodsBindingSource;
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
-
-
-
-			//List<People> employees = new List<People>(); 
-			//employees = ListPeople(sqlExpression);
-			//dataGridView1.DataSource = employees;
-		}
+        }
     }
 }
