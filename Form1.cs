@@ -1,13 +1,10 @@
-﻿using System.Windows.Forms;
-using Microsoft.Extensions.Configuration;
-using System.Data.SQLite;
-using System.Collections.Generic;
+﻿using LibraryForET;
 using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Data;
-using Microsoft.Data.Sqlite;
-using LibraryForET;
-using System.Data.Common;
+using System.Data.SQLite;
+using System.Drawing;
+using System.Windows.Forms;
 
 
 
@@ -15,9 +12,9 @@ namespace ElbrusTech
 {
     public partial class Form1 : Form
     {
-            Methods methods = new Methods();
-            DataTable dataTable = new DataTable();
-            SQLiteDataAdapter dataAdapter;
+        Methods methods = new Methods();
+        DataTable dataTable = new DataTable();
+        SQLiteDataAdapter dataAdapter;
 
         public Form1()
         {
@@ -25,7 +22,7 @@ namespace ElbrusTech
             dataAdapter = new SQLiteDataAdapter("SELECT * FROM emploees", "Data Source=employees.db");
             dataAdapter.Fill(dataTable);
             dataGridView1.DataSource = dataTable;
-            
+
         }
         private void button1_Click(object sender, System.EventArgs e)
         {
@@ -109,15 +106,30 @@ namespace ElbrusTech
             MessageBox.Show($"Количество измененных строк в DataTable: {dataTable.GetChanges()?.Rows.Count}");
 
             // Обновляем данные в базе данных с использованием dataTable
-            methods.Update(dataTable);
+            //methods.Update(dataTable);
 
             // Повторно загружаем данные в dataGridView1
             UpdateData();
         }
 
-		private void button3_Click(object sender, EventArgs e)
-		{
+        private void button3_Click(object sender, EventArgs e)
+        {
 
-		}
-	}
+        }
+
+        Point lastpoint;
+        private void panel1MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                this.Left += e.X - lastpoint.X;
+                this.Top += e.Y - lastpoint.Y;
+            }
+        }
+
+        private void panel1MouseDown(object sender, MouseEventArgs e)
+        {
+            lastpoint = new Point(e.X, e.Y);
+        }
+    }
 }
