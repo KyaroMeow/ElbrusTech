@@ -9,28 +9,65 @@ using System.IO;
 
 namespace LibraryForET
 {
-	public class People
-	{
-		public int ID { get; set; }
-		public string FIO { get; set; }
-		public string DateOfBirth { get; set; }
-		public string DateOfEmployment { get; set; }
-		public string Department { get; set; }
-		public string DateOfFired { get; set; }
-		public string Post { get; set; }
-		public string Salary { get; set; }
+    public class People
+    {
+        public int ID { get; set; }
+        public string FIO { get; set; }
+        public string DateOfBirth { get; set; }
+        public string DateOfEmployment { get; set; }
+        public string Department { get; set; }
+        public string DateOfFired { get; set; }
+        public string Post { get; set; }
+        public string Salary { get; set; }
 
-	}
-	public class Methods
+    }
+    public class Methods
     {
 
-        public void Update(SQLiteDataAdapter dataAdapter, DataTable dataTable)
+        private readonly string connectionString = "Data Source=employees.db";
+
+        public void Update(DataTable dataTable)
         {
-            using (var connection = new SqliteConnection("Data Source=employees.db"))
+            using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
-                dataAdapter.UpdateCommand = new SQLiteCommandBuilder(dataAdapter).GetUpdateCommand();
-                dataAdapter.Update(dataTable);
+
+                using (var transaction = connection.BeginTransaction())
+                {
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        if (row.RowState == DataRowState.Modified)
+                        {
+                            // Создаем SQL-команду обновления для каждой записи
+                            string updateCommandText = @"UPDATE emploees 
+                                                        SET ФИО = @FIO, 
+                                                            [Дата рождения] = @DateOfBirth, 
+                                                            [Дата принятия на работу] = @DateOfEmployment, 
+                                                            [Отдел] = @Department, 
+                                                            [Дата увольнения с работы] = @DateOfFired, 
+                                                            [Должность] = @Post, 
+                                                            [Оклад] = @Salary 
+                                                        WHERE ID = @ID";
+                            using (var command = new SqliteCommand(updateCommandText, connection, transaction))
+                            {
+                                command.Parameters.AddWithValue("@FIO", row["ФИО"]);
+                                command.Parameters.AddWithValue("@DateOfBirth", row["Дата рождения"]);
+                                command.Parameters.AddWithValue("@DateOfEmployment", row["Дата принятия на работу"]);
+                                command.Parameters.AddWithValue("@Department", row["Отдел"]);
+                                command.Parameters.AddWithValue("@DateOfFired", row["Дата увольнения с работы"]);
+                                command.Parameters.AddWithValue("@Post", row["Должность"]);
+                                command.Parameters.AddWithValue("@Salary", row["Оклад"]);
+                                command.Parameters.AddWithValue("@ID", row["ID"]);
+
+                                // Выполняем команду обновления
+                                command.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+
                 connection.Close();
             }
         }

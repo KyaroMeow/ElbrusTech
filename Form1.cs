@@ -15,8 +15,52 @@ namespace ElbrusTech
 {
     public partial class Form1 : Form
     {
-        Methods methods = new Methods();
-        DataTable dataTable = new DataTable();
+            Methods methods = new Methods();
+            DataTable dataTable = new DataTable();
+            SQLiteDataAdapter dataAdapter;
+
+        public Form1()
+        {
+            InitializeComponent();
+            dataAdapter = new SQLiteDataAdapter("SELECT * FROM emploees", "Data Source=employees.db");
+            dataAdapter.Fill(dataTable);
+            dataGridView1.DataSource = dataTable;
+            
+        }
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+
+            try
+            {
+                methods.GenereticEmployees(10);
+                UpdateData();
+                MessageBox.Show("Сотрудники сгенерированы");
+            }
+            catch
+            {
+                MessageBox.Show("ВСЕ ПЛОХО");
+            }
+
+        }
+
+        private void Form1_Load(object sender, System.EventArgs e)
+        {
+            dataTable = new DataTable();
+            dataTable.Columns.Add("ID", typeof(int));
+            dataTable.Columns.Add("ФИО", typeof(string));
+            dataTable.Columns.Add("Дата рождения", typeof(string));
+            dataTable.Columns.Add("Дата принятия на работу", typeof(string));
+            dataTable.Columns.Add("Отдел", typeof(string));
+            dataTable.Columns.Add("Дата увольнения с работы", typeof(string));
+            dataTable.Columns.Add("Должность", typeof(string));
+            dataTable.Columns.Add("Оклад", typeof(string));
+            UpdateData();
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         public void UpdateData()
         {
             dataGridView1.DataSource = null;
@@ -38,52 +82,37 @@ namespace ElbrusTech
             }
             dataGridView1.DataSource = dataTable;
         }
-        public Form1()
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            InitializeComponent();
-            
-        }
-         SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter("SELECT * FROM emploees", "Data Source=employees.db");
-        private void button1_Click(object sender, System.EventArgs e)
-        {
+            // Получаем текущую ячейку
+            MessageBox.Show($"Количество измененных строк в DataTable: {dataTable.GetChanges()?.Rows.Count}");
+            DataGridViewCell cell = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
-            try
+            // Если ячейка содержит изменения
+            if (cell.Value != cell.OwningRow.DataBoundItem)
             {
-                methods.GenereticEmployees(10);
-                UpdateData();
-                MessageBox.Show("Сотрудники сгенерированы");
+                // Получаем строку в DataTable, соответствующую текущей ячейке
+                DataRowView rowView = (DataRowView)dataGridView1.Rows[e.RowIndex].DataBoundItem;
+                DataRow row = rowView.Row;
+
+                // Обновляем значение в DataTable
+                row[cell.OwningColumn.DataPropertyName] = cell.Value;
             }
-            catch
-            {
-                MessageBox.Show("ВСЕ ПЛОХО");
-            }
-
         }
-
-        private void Form1_Load(object sender, System.EventArgs e)
-        {
-
-            dataTable = new DataTable();
-            dataTable.Columns.Add("ID", typeof(int));
-            dataTable.Columns.Add("ФИО", typeof(string));
-            dataTable.Columns.Add("Дата рождения", typeof(string));
-            dataTable.Columns.Add("Дата принятия на работу", typeof(string));
-            dataTable.Columns.Add("Отдел", typeof(string));
-            dataTable.Columns.Add("Дата увольнения с работы", typeof(string));
-            dataTable.Columns.Add("Должность", typeof(string));
-            dataTable.Columns.Add("Оклад", typeof(string));
-            UpdateData();
-
-
-        }
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            methods.Update(dataAdapter, dataTable);
+            // Применяем изменения в dataGridView1 к dataTable
+            dataGridView1.EndEdit();
+            dataTable.AcceptChanges();
+
+            // Подтверждаем изменения в DataTable
+            MessageBox.Show($"Количество измененных строк в DataTable: {dataTable.GetChanges()?.Rows.Count}");
+
+            // Обновляем данные в базе данных с использованием dataTable
+            methods.Update(dataTable);
+
+            // Повторно загружаем данные в dataGridView1
+            UpdateData();
         }
 
 		private void button3_Click(object sender, EventArgs e)
