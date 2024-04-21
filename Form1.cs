@@ -14,8 +14,7 @@ namespace ElbrusTech
 {
     public partial class Form1 : Form
     {
-
-		private DataTable dataTable;
+		DataTable dataTable = new DataTable();
 		private Methods methods;
 		public Form1()
         {
@@ -40,13 +39,6 @@ namespace ElbrusTech
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
 
-		}
-		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			List<People> peopleList = methods.ListPeople();
-			methodsBindingSource.DataSource = peopleList;
-			dataGridView1.DataSource = methodsBindingSource;
-
 			dataTable = new DataTable();
 			dataTable.Columns.Add("ID", typeof(int));
 			dataTable.Columns.Add("FIO", typeof(string));
@@ -57,21 +49,29 @@ namespace ElbrusTech
 			dataTable.Columns.Add("Post", typeof(string));
 			dataTable.Columns.Add("Salary", typeof(string));
 
-			foreach (var person in peopleList)
-			{
-				dataTable.Rows.Add(
-					person.ID,
-					person.FIO,
-					person.DateOfBirth,
-					person.DateOfEmployment,
-					person.Department,
-					person.DateOfFired,
-					person.Post,
-					person.Salary
-				);
-			}
-
 			dataGridView1.DataSource = dataTable;
+			//foreach (var person in peopleList)
+			//{
+			//	dataTable.Rows.Add(
+			//		person.ID,
+			//		person.FIO,
+			//		person.DateOfBirth,
+			//		person.DateOfEmployment,
+			//		person.Department,
+			//		person.DateOfFired,
+			//		person.Post,
+			//		person.Salary
+			//	);
+			//}
+
+	
+		}
+		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			List<People> peopleList = methods.ListPeople();
+			methodsBindingSource.DataSource = peopleList;
+			dataGridView1.DataSource = methodsBindingSource;
+
 
 
 
