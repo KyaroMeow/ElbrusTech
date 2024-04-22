@@ -6,6 +6,7 @@ using System.Data.SQLite;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ElbrusTech
 {
@@ -14,6 +15,7 @@ namespace ElbrusTech
         Methods methods = new Methods();
         DataTable dataTable = new DataTable();
         SQLiteDataAdapter dataAdapter;
+<<<<<<< Updated upstream
 		private void Form1_Paint(object sender, PaintEventArgs e)
 		{
 			GraphicsPath path = new GraphicsPath();
@@ -29,6 +31,10 @@ namespace ElbrusTech
 		}
 
         public Form1()
+=======
+
+		public Form1()
+>>>>>>> Stashed changes
         {
             InitializeComponent();
             
@@ -38,6 +44,26 @@ namespace ElbrusTech
 
 			this.FormBorderStyle = FormBorderStyle.None;
 			this.DoubleBuffered = true;
+		}
+		private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex >= 0 && e.ColumnIndex == dataGridView1.Columns["ID"].Index)
+			{
+				dataGridView1.CurrentCell = null;
+			}
+		}
+		private void Form1_Paint(object sender, PaintEventArgs e)
+		{
+			GraphicsPath path = new GraphicsPath();
+			int radius = 14; 
+
+			path.AddArc(0, 0, radius, radius, 180, 90); 
+			path.AddArc(this.Width - radius, 0, radius, radius, 270, 90); 
+			path.AddArc(this.Width - radius, this.Height - radius, radius, radius, 0, 90); 
+			path.AddArc(0, this.Height - radius, radius, radius, 90, 90); 
+			path.CloseAllFigures();
+
+			this.Region = new Region(path);
 		}
         private void Form1_Load(object sender, System.EventArgs e)
         {
@@ -143,5 +169,35 @@ namespace ElbrusTech
         {
             lastpoint = new Point(e.X, e.Y);
         }
+<<<<<<< Updated upstream
+=======
+
+		private void panel3_Paint(object sender, PaintEventArgs e)
+		{
+
+		}
+
+		private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+		}
+
+		private void AddHelp(object sender, EventArgs e)
+		{
+			guna2HtmlToolTip1.Show("Добавить сотрудника", GenereticEmployees);
+		}
+
+		private void guna2HtmlToolTip1_Popup(object sender, PopupEventArgs e)
+		{
+			if (e.AssociatedControl == GenereticEmployees)  // проверяем, что всплывающая подсказка относится к нашей кнопке
+			{
+				guna2HtmlToolTip1.SetToolTip(GenereticEmployees, "Добавить сотрудника");
+			}
+		}
+>>>>>>> Stashed changes
 	}
 }
