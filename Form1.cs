@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ElbrusTech
 {
-    public partial class Form1 : Form
+	public partial class Form1 : Form
     {
         Methods methods = new Methods();
         DataTable dataTable = new DataTable();
@@ -61,13 +61,19 @@ namespace ElbrusTech
         }
         private void GenereticEmployees_click(object sender, EventArgs e)
         {
-           // int count = твой текстбокс;
-           //methods.GenereticEmployees(count);
+            int count = Convert.ToInt32(guna2TextBox1.Text);
+            methods.GenereticEmployees(count);
             UpdateData();
         }
+		private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
+			{
+				e.Handled = true;
+			}
+		}
 
-     
-        private void Save_click(object sender, EventArgs e)
+		private void Save_click(object sender, EventArgs e)
         {
 
 
@@ -100,6 +106,14 @@ namespace ElbrusTech
             lastpoint = new Point(e.X, e.Y);
         }
 
+		private void panel3_Paint(object sender, PaintEventArgs e)
+		{
 
-    }
+		}
+
+		private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+		{
+
+		}
+	}
 }
