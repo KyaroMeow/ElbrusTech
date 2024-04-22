@@ -176,9 +176,24 @@ namespace LibraryForET
                     string lastname = wLastName[rwLastName];
                     fio = $"{surname} {name} {lastname}";
                 }
+                using (var connection = new SqliteConnection("Data Source=employees.db"))
+                {
+                    connection.Open();
+                    SqliteCommand command = new SqliteCommand();
+                    command.Connection = connection;
+                    command.CommandText = $"SELECT COUNT(*) FROM emploees WHERE ФИО = @fio";
+                    command.Parameters.AddWithValue("@fio", fio);
+                    int count = Convert.ToInt32(command.ExecuteScalar());
+                    connection.Close();
 
-                string commandText = $"INSERT INTO emploees ('ФИО', 'Дата рождения', 'Дата принятия на работу', 'Отдел', 'Дата увольнения с работы', 'Должность', 'Оклад') VALUES ('{fio}', '{dateofbirth}', '{dateofemployment}', '{department}', '{dateofFired}', '{post}', '{salary}')";
-                Command(commandText);
+                    if (count == 0)
+                    {
+                        string commandText = $"INSERT INTO emploees ('ФИО', 'Дата рождения', 'Дата принятия на работу', 'Отдел', 'Дата увольнения с работы', 'Должность', 'Оклад') VALUES ('{fio}', '{dateofbirth}', '{dateofemployment}', '{department}', '{dateofFired}', '{post}', '{salary}')";
+                        Command(commandText);
+                    }
+
+                }
+
 
             }
         }
