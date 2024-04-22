@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-
-
 
 namespace ElbrusTech
 {
@@ -15,6 +14,19 @@ namespace ElbrusTech
         Methods methods = new Methods();
         DataTable dataTable = new DataTable();
         SQLiteDataAdapter dataAdapter;
+		private void Form1_Paint(object sender, PaintEventArgs e)
+		{
+			GraphicsPath path = new GraphicsPath();
+			int radius = 14; // Radius of the rounded corners
+
+			path.AddArc(0, 0, radius, radius, 180, 90); // Top-left corner
+			path.AddArc(this.Width - radius, 0, radius, radius, 270, 90); // Top-right corner
+			path.AddArc(this.Width - radius, this.Height - radius, radius, radius, 0, 90); // Bottom-right corner
+			path.AddArc(0, this.Height - radius, radius, radius, 90, 90); // Bottom-left corner
+			path.CloseAllFigures();
+
+			this.Region = new Region(path);
+		}
 
         public Form1()
         {
@@ -23,7 +35,10 @@ namespace ElbrusTech
             dataAdapter = new SQLiteDataAdapter("SELECT * FROM emploees", "Data Source=employees.db");
             dataAdapter.Fill(dataTable);
             dataGridView1.DataSource = dataTable;
-        }
+
+			this.FormBorderStyle = FormBorderStyle.None;
+			this.DoubleBuffered = true;
+		}
         private void Form1_Load(object sender, System.EventArgs e)
         {
             dataTable = new DataTable();
@@ -38,7 +53,7 @@ namespace ElbrusTech
             UpdateData();
         }
 
-        public void UpdateData()
+		public void UpdateData()
         {
             dataGridView1.DataSource = null;
             dataTable.Rows.Clear();
@@ -75,8 +90,8 @@ namespace ElbrusTech
 
 		private void Save_click(object sender, EventArgs e)
         {
-
-
+            //ДЕЛОЙ
+            // и ошибка в кнопке добавить
         }
 
         private void Delete_click(object sender, EventArgs e)
