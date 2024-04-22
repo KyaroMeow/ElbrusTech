@@ -23,54 +23,6 @@ namespace LibraryForET
     }
     public class Methods
     {
-
-        private readonly string connectionString = "Data Source=employees.db";
-
-        public void Update(DataTable dataTable)
-        {
-            using (var connection = new SqliteConnection(connectionString))
-            {
-                connection.Open();
-
-                using (var transaction = connection.BeginTransaction())
-                {
-                    foreach (DataRow row in dataTable.Rows)
-                    {
-                        if (row.RowState == DataRowState.Modified)
-                        {
-                            // Создаем SQL-команду обновления для каждой записи
-                            string updateCommandText = @"UPDATE emploees 
-                                                        SET ФИО = @FIO, 
-                                                            [Дата рождения] = @DateOfBirth, 
-                                                            [Дата принятия на работу] = @DateOfEmployment, 
-                                                            [Отдел] = @Department, 
-                                                            [Дата увольнения с работы] = @DateOfFired, 
-                                                            [Должность] = @Post, 
-                                                            [Оклад] = @Salary 
-                                                        WHERE ID = @ID";
-                            using (var command = new SqliteCommand(updateCommandText, connection, transaction))
-                            {
-                                command.Parameters.AddWithValue("@FIO", row["ФИО"]);
-                                command.Parameters.AddWithValue("@DateOfBirth", row["Дата рождения"]);
-                                command.Parameters.AddWithValue("@DateOfEmployment", row["Дата принятия на работу"]);
-                                command.Parameters.AddWithValue("@Department", row["Отдел"]);
-                                command.Parameters.AddWithValue("@DateOfFired", row["Дата увольнения с работы"]);
-                                command.Parameters.AddWithValue("@Post", row["Должность"]);
-                                command.Parameters.AddWithValue("@Salary", row["Оклад"]);
-                                command.Parameters.AddWithValue("@ID", row["ID"]);
-
-                                // Выполняем команду обновления
-                                command.ExecuteNonQuery();
-                            }
-                        }
-                    }
-
-                    transaction.Commit();
-                }
-
-                connection.Close();
-            }
-        }
         public List<People> ListPeople()
         {
             List<People> people = new List<People>();
@@ -122,7 +74,6 @@ namespace LibraryForET
                 command.ExecuteNonQuery();
             }
         }
-
         public void GenereticEmployees(int quantityEmployees)
         {
 
@@ -136,10 +87,8 @@ namespace LibraryForET
             string[] department1 = File.ReadAllLines("resx/GenereticEmployees/department.txt");
             string[] dateOfFired = File.ReadAllLines("resx/GenereticEmployees/dateOfFired.txt");
             string[] post1 = File.ReadAllLines("resx/GenereticEmployees/post.txt");
-
-
             Random rand = new Random();
-            for (int i = 0; i <= quantityEmployees; i++)
+            for (int i = 1; i <= quantityEmployees; i++)
             {
                 int rname = rand.Next(0, wName.Length);
                 int rsurname = rand.Next(0, surName.Length);
@@ -191,10 +140,7 @@ namespace LibraryForET
                         string commandText = $"INSERT INTO emploees ('ФИО', 'Дата рождения', 'Дата принятия на работу', 'Отдел', 'Дата увольнения с работы', 'Должность', 'Оклад') VALUES ('{fio}', '{dateofbirth}', '{dateofemployment}', '{department}', '{dateofFired}', '{post}', '{salary}')";
                         Command(commandText);
                     }
-
                 }
-
-
             }
         }
     }

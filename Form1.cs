@@ -17,12 +17,12 @@ namespace ElbrusTech
 		private void Form1_Paint(object sender, PaintEventArgs e)
 		{
 			GraphicsPath path = new GraphicsPath();
-			int radius = 14; // Radius of the rounded corners
+			int radius = 14; 
 
-			path.AddArc(0, 0, radius, radius, 180, 90); // Top-left corner
-			path.AddArc(this.Width - radius, 0, radius, radius, 270, 90); // Top-right corner
-			path.AddArc(this.Width - radius, this.Height - radius, radius, radius, 0, 90); // Bottom-right corner
-			path.AddArc(0, this.Height - radius, radius, radius, 90, 90); // Bottom-left corner
+			path.AddArc(0, 0, radius, radius, 180, 90); 
+			path.AddArc(this.Width - radius, 0, radius, radius, 270, 90); 
+			path.AddArc(this.Width - radius, this.Height - radius, radius, radius, 0, 90); 
+			path.AddArc(0, this.Height - radius, radius, radius, 90, 90); 
 			path.CloseAllFigures();
 
 			this.Region = new Region(path);
@@ -76,9 +76,12 @@ namespace ElbrusTech
         }
         private void GenereticEmployees_click(object sender, EventArgs e)
         {
+            if(guna2TextBox1.Text != "")
+            {
             int count = Convert.ToInt32(guna2TextBox1.Text);
             methods.GenereticEmployees(count);
             UpdateData();
+            }
         }
 		private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
 		{
@@ -87,11 +90,31 @@ namespace ElbrusTech
 				e.Handled = true;
 			}
 		}
-
-		private void Save_click(object sender, EventArgs e)
+        public void DataGridViewToDataBase(DataGridView dataGridView)
         {
-            //ДЕЛОЙ
-            // и ошибка в кнопке добавить
+            foreach (DataGridViewRow dgvRow in dataGridView.Rows)
+            {
+                if (!dgvRow.IsNewRow)
+                {
+                    int id = Convert.ToInt32(dgvRow.Cells["ID"].Value);
+                    string fio = dgvRow.Cells["ФИО"].Value.ToString();
+                    string dateOfBirth = dgvRow.Cells["Дата рождения"].Value.ToString();
+                    string dateOfEmployment = dgvRow.Cells["Дата принятия на работу"].Value.ToString();
+                    string department = dgvRow.Cells["Отдел"].Value.ToString();
+                    string dateOfFired = dgvRow.Cells["Дата увольнения с работы"].Value.ToString();
+                    string post = dgvRow.Cells["Должность"].Value.ToString();
+                    string salary = dgvRow.Cells["Оклад"].Value.ToString();
+                    string query = $"INSERT INTO emploees (ID, ФИО, [Дата рождения], [Дата принятия на работу], Отдел, [Дата увольнения с работы], Должность, Оклад) " +
+                                   $"VALUES ('{id}', '{fio}', '{dateOfBirth}', '{dateOfEmployment}', '{department}', '{dateOfFired}', '{post}', '{salary}')";
+                    methods.Command(query);
+                }
+            }
+        }
+        private void Save_click(object sender, EventArgs e)
+        {
+            methods.Command("DELETE FROM emploees");
+            DataGridViewToDataBase(dataGridView1);
+            UpdateData();
         }
 
         private void Delete_click(object sender, EventArgs e)
@@ -120,15 +143,5 @@ namespace ElbrusTech
         {
             lastpoint = new Point(e.X, e.Y);
         }
-
-		private void panel3_Paint(object sender, PaintEventArgs e)
-		{
-
-		}
-
-		private void guna2TextBox1_TextChanged(object sender, EventArgs e)
-		{
-
-		}
 	}
 }
