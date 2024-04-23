@@ -151,9 +151,7 @@ namespace ElbrusTech
 			lastpoint = new Point(e.X, e.Y);
 		}
 
-		private void guna2HtmlToolTip2_Popup(object sender, PopupEventArgs e)
-		{
-		}
+		private void guna2HtmlToolTip2_Popup(object sender, PopupEventArgs e) { }
 
 		private void Addcl(object sender, EventArgs e)//mouceHoveh
 		{
