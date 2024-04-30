@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ElbrusTech
@@ -111,10 +112,24 @@ namespace ElbrusTech
 		}
 		private void Save_click(object sender, EventArgs e)
 		{
-
+            DataGridViewRow lastRow = dataGridView1.Rows[dataGridView1.Rows.Count - 2];
+            string lastName = lastRow.Cells["ФИО"].Value?.ToString();
+            string lastDate = lastRow.Cells["Дата рождения"].Value?.ToString();
+            int matchingRowCount = dataGridView1.Rows
+    .OfType<DataGridViewRow>()
+    .Count(row => row.Cells["ФИО"].Value != null && row.Cells["ФИО"].Value.ToString() == lastName && row.Cells["Дата рождения"].Value != null && row.Cells["Дата рождения"].Value.ToString() == lastDate);
+            if(matchingRowCount >= 2)
+			{
+				MessageBox.Show("Такой пользователь уже существует");
+			}
+			else
+			{
 			methods.Command("DELETE FROM emploees");
 			DataGridViewToDataBase(dataGridView1);
 			UpdateData();
+				
+			}
+			
 		}
 
 		private void Delete_click(object sender, EventArgs e)
@@ -160,5 +175,11 @@ namespace ElbrusTech
 			Guna.UI2.WinForms.Guna2HtmlToolTip guna2Button3_MouseHover = new Guna.UI2.WinForms.Guna2HtmlToolTip();
 			guna2Button3_MouseHover.SetToolTip(guna2Button3, "Очистить таблицу");
 		}
-	}
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+			methods.GenereticEmployees(20);
+			UpdateData();
+        }
+    }
 }

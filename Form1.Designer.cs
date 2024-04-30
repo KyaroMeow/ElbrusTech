@@ -45,6 +45,7 @@
             this.dataGridView1 = new Guna.UI2.WinForms.Guna2DataGridView();
             this.guna2Separator1 = new Guna.UI2.WinForms.Guna2Separator();
             this.guna2HtmlToolTip2 = new Guna.UI2.WinForms.Guna2HtmlToolTip();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).BeginInit();
             this.panel3.SuspendLayout();
@@ -127,6 +128,7 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(142)))), ((int)(((byte)(152)))), ((int)(((byte)(164)))));
+            this.panel3.Controls.Add(this.button1);
             this.panel3.Controls.Add(this.guna2Button3);
             this.panel3.Controls.Add(this.guna2Button1);
             this.panel3.Controls.Add(this.guna2Button2);
@@ -286,6 +288,17 @@
             this.guna2HtmlToolTip2.MaximumSize = new System.Drawing.Size(0, 0);
             this.guna2HtmlToolTip2.TitleFont = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(14, 8);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -328,6 +341,7 @@
 		private Guna.UI2.WinForms.Guna2HtmlToolTip guna2HtmlToolTip1;
 		private Guna.UI2.WinForms.Guna2Separator guna2Separator1;
 		private Guna.UI2.WinForms.Guna2HtmlToolTip guna2HtmlToolTip2;
-	}
+        private System.Windows.Forms.Button button1;
+    }
 }
 
