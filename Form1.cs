@@ -81,15 +81,7 @@ namespace ElbrusTech
 			}
 			dataGridView1.DataSource = dataTable;
 		}
-		private void GenereticEmployees_click(object sender, EventArgs e)
-		{
-			if (guna2TextBox1.Text != "")
-			{
-				int count = Convert.ToInt32(guna2TextBox1.Text);
-				methods.GenereticEmployees(count);
-				UpdateData();
-			}
-		}
+		
 		private void textBox6_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != '.')
@@ -119,6 +111,7 @@ namespace ElbrusTech
 		}
 		private void Save_click(object sender, EventArgs e)
 		{
+
 			methods.Command("DELETE FROM emploees");
 			DataGridViewToDataBase(dataGridView1);
 			UpdateData();
@@ -150,15 +143,6 @@ namespace ElbrusTech
 		{
 			lastpoint = new Point(e.X, e.Y);
 		}
-
-		private void guna2HtmlToolTip2_Popup(object sender, PopupEventArgs e) { }
-
-		private void Addcl(object sender, EventArgs e)//mouceHoveh
-		{
-			Guna.UI2.WinForms.Guna2HtmlToolTip guna2HtmlToolTip1 = new Guna.UI2.WinForms.Guna2HtmlToolTip();
-			guna2HtmlToolTip1.SetToolTip(GenereticEmployees, "Добавить");
-		}
-
 		private void guna2Button1_MouseHover(object sender, EventArgs e)
 		{
 			Guna.UI2.WinForms.Guna2HtmlToolTip guna2HtmlToolTip2 = new Guna.UI2.WinForms.Guna2HtmlToolTip();
